@@ -15,6 +15,8 @@ builder.Services.AddControllersWithViews();
 
 //Service adicionada por conta da aula 263
 builder.Services.AddScoped<SellerService, SellerService>();
+//Service adicionada por conta da aula 266
+builder.Services.AddScoped<DepartmentService, DepartmentService>();
 
 var app = builder.Build();
 

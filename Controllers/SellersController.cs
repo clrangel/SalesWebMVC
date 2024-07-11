@@ -23,7 +23,7 @@ namespace SalesWebMvc.Controllers
 
             return View(list);
         }
-
+        //CREATE
         // public IActionResult Create => View();
         public IActionResult Create()
         {
@@ -31,11 +31,37 @@ namespace SalesWebMvc.Controllers
             var ViewModel = new SellerFormViewModel { Departments = departments };
             return View(ViewModel);
         }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller) 
         {
             _sellerService.Insert(seller);
+            return RedirectToAction("Index");
+        }
+
+        //DELETE
+        public IActionResult Delete(int? id) 
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int  id)
+        {
+            _sellerService.Remove(id);
             return RedirectToAction("Index");
         }
     }

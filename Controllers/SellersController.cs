@@ -71,9 +71,16 @@ namespace SalesWebMvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int  id)
-        {
-            await _sellerService.RemoveAsync(id);
-            return RedirectToAction("Index");
+        {   //Try implementado após a implemetação da IntegrityException e SellerService Delete
+            try
+            {
+                await _sellerService.RemoveAsync(id);
+                return RedirectToAction("Index");
+            }
+            catch(IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
         }
 
         //DETALHES
